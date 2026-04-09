@@ -1,0 +1,111 @@
+class Program
+{
+    
+   //Larissa Figueredo Mariano
+     static void Main()
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine("🐉 === Triagem de Heróis da Guilda === 🐉");
+        Console.WriteLine();
+
+        // Entrada de dados
+        Console.Write("🪪 Nome do Herói: ");
+        string nome = Console.ReadLine();
+
+        Console.Write("🛡️ Classe do Herói (Mago, Clérigo, Guerreiro, Druida, Anão, Elfo ou Troll): ");
+        string classe = Console.ReadLine();
+
+        Console.Write("📊 Nível: ");
+        int nivel;
+        int.TryParse(Console.ReadLine(), out nivel);
+
+        Console.Write("❤️ Pontos de Vida (HP): ");
+        double hp;
+        double.TryParse(Console.ReadLine(), out hp);
+
+        Console.Write("🧪 Pontos de Magia (Mana): ");
+        int mana;
+        int.TryParse(Console.ReadLine(), out mana);
+
+        Console.Write("💰 Ouro na mochila: ");
+        double ouro;
+        double.TryParse(Console.ReadLine(), out ouro);
+
+        Console.WriteLine();
+
+        // Regra do Troll
+        if (classe == "Troll")
+        {
+            Console.WriteLine("🚫 Troll detectado! Você foi expulso da guilda!");
+            return;
+        }
+        else if (classe != "Troll" && !(nivel < 5))
+        {
+            Console.WriteLine("🏛️ Herói autorizado a entrar na guilda!");
+        }
+        else
+        {
+            Console.WriteLine("⚠️ Nível muito baixo para a guilda!");
+        }
+
+        // Cálculo do Poder Base
+        double poderBase = (nivel * 10) + (hp / 2) - 5;
+
+        Console.WriteLine($"⚔️ Poder Base do herói: {poderBase}");
+
+        // Regra do crítico
+        if (poderBase % 2 == 0)
+        {
+            Console.WriteLine("✨ Ataque Crítico liberado! O herói tem sorte hoje! ⚔️");
+        }
+
+        bool podeAtacar = false;
+
+        // Regra da Magia
+        if (classe == "Mago" || classe == "Druida" || classe == "Clérigo")
+        {
+            if (mana >= 30 && nivel <= 100)
+            {
+                Console.WriteLine("🔮 O herói usa magia poderosa contra o dragão!");
+                podeAtacar = true;
+            }
+            else
+            {
+                Console.WriteLine("🪵 O cajado falhou! Mana insuficiente!");
+            }
+        }
+
+        // Regra do ataque físico
+        else if (classe == "Guerreiro" || classe == "Anão" || classe == "Elfo")
+        {
+            if (hp > 20 && poderBase > 50)
+            {
+                Console.WriteLine("🗡️ Ataque físico realizado contra o dragão!");
+                podeAtacar = true;
+            }
+            else
+            {
+                Console.WriteLine("😵 O herói está muito fraco para atacar!");
+            }
+        }
+
+        // Caso não consiga atacar
+        if (!podeAtacar)
+        {
+            Console.WriteLine("😰 O herói não conseguiu atacar... tentando subornar o dragão!");
+
+            if (ouro > 1000 || classe == "Anão")
+            {
+                Console.WriteLine("💰 O dragão aceita o suborno e vai embora! 🐉");
+            }
+            else
+            {
+                Console.WriteLine("🔥 O dragão não aceitou... o herói virou churrasco! 🍖");
+            }
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("🎮 Fim da simulação!");
+    }
+}
