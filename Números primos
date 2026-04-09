@@ -1,0 +1,39 @@
+//Larissa Figueredo Mariano
+Console.WriteLine("--- Calculadora de Números Primos ---");
+Console.Write("Digite um número inteiro: ");
+
+if (int.TryParse(Console.ReadLine(), out int numero))
+{
+    if (EhPrimo(numero))
+    {
+        Console.WriteLine($"{numero} é um número primo.");
+    }
+    else
+    {
+        Console.WriteLine($"{numero} não é um número primo.");
+    }
+}
+else
+{
+    Console.WriteLine("Por favor, digite um número inteiro válido.");
+}
+
+Console.WriteLine("\nPressione qualquer tecla para sair...");
+Console.ReadKey();
+
+// Função lógica para verificar se o número é primo
+static bool EhPrimo(int n)
+{
+    if (n <= 1) return false; // Números menores ou iguais a 1 não são primos
+    if (n == 2) return true; // 2 é o único primo par
+    if (n % 2 == 0) return false; // Elimina todos os outros pares
+
+    // Verifica divisores ímpares do 3 até a raiz quadrada do número (otimização)
+    int limite = (int)Math.Sqrt(n);
+    for (int i = 3; i <= limite; i += 2)
+    {
+        if (n % i == 0) return false;
+    }
+
+    return true;
+}
